@@ -1,0 +1,10 @@
+# Fichiers systeme
+.DS_Store
+Thumbs.db
+
+# Config locale (si tu crees un config.local.php plus tard)
+config.local.php
+
+# Dossiers d'IDE
+.vscode/
+.idea/
