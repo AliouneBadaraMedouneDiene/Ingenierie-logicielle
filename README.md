@@ -1,39 +1,54 @@
-# Actualités Polytechniciennes — V1
+# Actualités Polytechniciennes — V1 (architecture MVC, lecture seule)
 
-Site d'actualités de l'ESP : menus dynamiques (depuis la BDD), page d'accueil filtrable par rubrique, page de détail d'article.
+Site d'actualités : catégories dynamiques (depuis la BDD), page d'accueil filtrable par catégorie, page de détail d'article. Architecture **MVC** avec un point d'entrée unique. Base de données : `mglsi_news`.
+
+Cette V1 est **identique à la V2** à un détail près : elle ne propose pas encore la création, la modification ou la suppression d'articles (pas d'espace d'administration). Voir la branche `main`/`v2` pour la version avec CRUD.
 
 ## Structure du projet
 
 ```
-actuesp/
-├── config.php              # Connexion PDO à MySQL
-├── index.php                # Accueil + filtrage par menu (?menu=slug)
-├── article.php               # Détail d'un article (?id=...)
-├── install.sql                # Script de création de la BDD + données de démo
-├── includes/
-│   ├── header.php             # <head>, en-tête, menu dynamique
-│   └── footer.php               # Pied de page, fermeture HTML
+Ingenierie-logicielle/
+├── config.php                 # Bootstrap : session, connexion, constantes, helpers
+├── index.php                   # Front controller unique (routeur)
+├── install.sql                  # Script de création de la BDD mglsi_news + données de démo
+├── core/
+│   ├── Database.php             # Connexion PDO (singleton)
+│   └── View.php                  # Moteur de rendu (englobe une vue dans le layout)
+├── models/
+│   ├── Categorie.php             # Requêtes SQL sur la table `Categorie`
+│   └── Article.php                # Lecture seule : all(), byCategorieId(), find()
+├── controllers/
+│   ├── HomeController.php         # Accueil + filtrage par catégorie
+│   └── ArticleController.php       # Détail d'un article
+├── views/
+│   ├── layout/{header,footer}.php   # Gabarit HTML partagé
+│   ├── home/index.php                # Vue accueil
+│   └── article/{show,not-found}.php   # Vue détail article
 └── assets/
-    ├── css/style.css             # Feuille de style
-    └── img/                        # Images des articles (optionnel)
+    └── css/style.css                  # Design system (typo, couleurs, composants)
 ```
 
-## Installation (XAMPP)
+### Routes disponibles
 
-1. Copie le dossier `actuesp` dans `C:\xampp\htdocs\`.
-2. Démarre **Apache** et **MySQL** depuis le panneau de contrôle XAMPP.
-3. Ouvre **phpMyAdmin** (http://localhost/phpmyadmin), onglet **SQL**, et exécute le contenu de `install.sql`.
-4. Vérifie les identifiants dans `config.php` si besoin (utilisateur `root`, mot de passe vide par défaut).
-5. Accède au site : http://localhost/actuesp/
+| URL | Contrôleur → méthode | Rôle |
+|---|---|---|
+| `index.php` ou `index.php?route=home` | `HomeController::index` | Accueil, tous les articles |
+| `index.php?route=home&categorie=1` | `HomeController::index` | Accueil filtré par catégorie (id) |
+| `index.php?route=article&id=5` | `ArticleController::show` | Détail d'un article |
+
+## Installation (WAMP)
+
+1. Copie **tout le dossier** dans `C:\wamp64\www\` en conservant le nom du dossier (`BASE_URL` dans `config.php` doit correspondre exactement).
+2. Démarre **WAMP** (icône verte).
+3. Ouvre **phpMyAdmin** (http://localhost/phpmyadmin), onglet **SQL**, colle le contenu de `install.sql` et exécute (crée la base `mglsi_news`). Si tu as déjà cette base via la branche `v2`, inutile de la recréer.
+4. Accède au site : http://localhost/Ingenierie-logicielle/ (adapte le chemin selon le nom réel du dossier).
 
 ## Fonctionnement
 
-- **Menus dynamiques** : la barre de navigation est générée depuis la table `menus` (colonnes `nom`, `slug`, `ordre`).
-- **Filtrage** : cliquer sur un menu recharge `index.php?menu=<slug>`, qui filtre les articles via une jointure SQL sur `menu_id`.
-- **Détail d'article** : chaque carte pointe vers `article.php?id=<id>`, qui affiche le contenu complet.
+- **Catégories dynamiques** : la barre de navigation est générée depuis la table `Categorie` (`Categorie::all()`).
+- **Filtrage** : cliquer sur une catégorie recharge l'accueil avec `?categorie=<id>`.
+- **Détail d'article** : chaque carte pointe vers la route `article`, affichage en lecture seule.
 
-## Évolutions possibles
+## Évolutions (branche `v2`)
 
-- Interface d'administration (CRUD).
-- Recherche par mot-clé, pagination.
-- Architecture MVC (voir branche `v2`).
+- Ajout d'un espace d'administration (`AdminController`) avec création, modification et suppression d'articles (CRUD complet), formulaires avec validation, jetons CSRF, messages de confirmation.
