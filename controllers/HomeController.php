@@ -19,4 +19,6 @@ class HomeController
         View::render('home/index', [
             'articles'          => $articles,
             'categorieCourante' => $categorieCourante,
-    
+        ], $pageTitle);
+    }
+}

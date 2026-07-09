@@ -51,4 +51,7 @@ $flash = flash_get();
 <?php if ($flash): ?>
     <div class="container">
         <div class="alert alert-<?= h($flash['type']) ?>" role="status"><?= h($flash['message']) ?></div>
-    </d
+    </div>
+<?php endif; ?>
+
+<main class="container" id="main-content">

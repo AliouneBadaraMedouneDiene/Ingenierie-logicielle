@@ -45,4 +45,4 @@
             </tbody>
         </table>
     </div>
-<?php end
+<?php endif; ?>
