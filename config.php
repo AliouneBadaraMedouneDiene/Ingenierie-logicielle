@@ -16,9 +16,8 @@ define('DB_PASS', '');       // vide par défaut sous XAMPP/WAMP
 define('DB_CHARSET', 'utf8mb4');
 
 // --- Chemin de base du site ---
-// Si le dossier du projet dans htdocs s'appelle autrement que "actuesp",
-// modifie cette constante (ex: '/mon-dossier').
-define('BASE_URL', '/actuesp');
+// Doit correspondre exactement au nom du dossier dans www/htdocs.
+define('BASE_URL', '/Ingenierie-logicielle');
 
 define('ROOT_PATH', __DIR__);
 
