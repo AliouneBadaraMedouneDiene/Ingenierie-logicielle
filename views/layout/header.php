@@ -1,9 +1,4 @@
 <?php
-/**
- * Layout partagé — en-tête HTML, menu dynamique.
- * Variables disponibles : $pageTitle (optionnel, injecté par View::render).
- */
-
 $categories = Categorie::all();
 $categorieActiveId = isset($_GET['categorie']) ? (int) $_GET['categorie'] : 0;
 ?>

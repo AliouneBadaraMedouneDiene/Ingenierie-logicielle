@@ -1,8 +1,4 @@
 <?php
-/**
- * Couche d'accès à la base de données (Modèle).
- * Connexion PDO unique partagée par tous les modèles.
- */
 class Database
 {
     private static ?PDO $instance = null;

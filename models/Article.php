@@ -1,13 +1,6 @@
 <?php
-/**
- * Modèle Article : lecture des articles (V1 — pas de création/modification/suppression).
- * Colonnes réelles : id, titre, contenu, dateCreation, dateModification, categorie (FK -> Categorie.id).
- */
 class Article
 {
-    /**
-     * Tous les articles, du plus récent au plus ancien, avec le libellé de la catégorie.
-     */
     public static function all(): array
     {
         $stmt = Database::getConnection()->query(
@@ -20,9 +13,6 @@ class Article
         return $stmt->fetchAll();
     }
 
-    /**
-     * Articles filtrés par identifiant de catégorie.
-     */
     public static function byCategorieId(int $categorieId): array
     {
         $stmt = Database::getConnection()->prepare(
@@ -37,9 +27,6 @@ class Article
         return $stmt->fetchAll();
     }
 
-    /**
-     * Un article complet (pour la page de détail).
-     */
     public static function find(int $id): ?array
     {
         $stmt = Database::getConnection()->prepare(

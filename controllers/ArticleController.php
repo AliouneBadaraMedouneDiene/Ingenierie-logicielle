@@ -1,9 +1,6 @@
 <?php
 require_once ROOT_PATH . '/models/Article.php';
 
-/**
- * Contrôleur de la page de détail d'un article.
- */
 class ArticleController
 {
     public function show(): void

@@ -1,12 +1,6 @@
 <?php
-/**
- * Modèle Categorie : accès à la table `Categorie` (id, libelle).
- */
 class Categorie
 {
-    /**
-     * Toutes les catégories, dans l'ordre de création.
-     */
     public static function all(): array
     {
         $stmt = Database::getConnection()->query(
@@ -15,9 +9,6 @@ class Categorie
         return $stmt->fetchAll();
     }
 
-    /**
-     * Retrouve une catégorie par son identifiant.
-     */
     public static function find(int $id): ?array
     {
         $stmt = Database::getConnection()->prepare(

@@ -1,8 +1,4 @@
-<?php
-/**
- * Vue détail d'un article — variable : $article (fournie par ArticleController).
- */
-?>
+<?php ?>
 
 <article class="article-detail">
     <a href="<?= route_url('home', ['categorie' => $article['categorie']]) ?>" class="back-link">&larr; Retour à <?= h($article['categorie_libelle']) ?></a>

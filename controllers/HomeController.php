@@ -2,9 +2,6 @@
 require_once ROOT_PATH . '/models/Categorie.php';
 require_once ROOT_PATH . '/models/Article.php';
 
-/**
- * Contrôleur de la page d'accueil : liste des articles, filtrage par catégorie.
- */
 class HomeController
 {
     public function index(): void

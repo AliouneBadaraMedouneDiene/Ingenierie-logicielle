@@ -1,8 +1,4 @@
-<?php
-/**
- * Vue accueil — variables : $articles, $categorieCourante (fournies par HomeController).
- */
-?>
+<?php ?>
 
 <section class="page-intro">
     <h1><?= $categorieCourante ? h($categorieCourante['libelle']) : 'Toutes les actualités' ?></h1>
